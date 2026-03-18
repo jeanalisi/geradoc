@@ -1,132 +1,172 @@
-PROJETO DESCONTINUADO
-===========================================
+# GeraDox — Sistema Gerenciador de Documentos
 
-GeraDoc - Sistema Gerenciador de Documentos
-===========================================
+> Atualizado para **PHP 8.x / MySQL 8.x** com tema **WordPress Admin Off-White**.
 
+---
 
-Descrição:
-===================================
+## Descrição
 
-O GeraDoc é um sistema de Gerenciamento de Conteúdo Corporativo (ECM - Enterprise Content Management).
+O GeraDox é um sistema de Gerenciamento de Conteúdo Corporativo (ECM — Enterprise Content Management) desenvolvido em **CodeIgniter 2.x**.
 
-Ele foi desenvolvido para facilitar a criação de documentos oficiais padronizados, como ofícios, comunicações internas, despachos, pareceres técnicos, pareceres jurídicos, atos administrativos e notas de instrução nos diversos setores de instituições governamentais, mantendo as formas, controlando numerações, preservando as informações, controlando acessos e permissões, bem como possibilitando pesquisas textuais nos conteúdos dos documentos produzidos.
+Facilita a criação de documentos oficiais padronizados (ofícios, comunicações internas, despachos, pareceres, atos administrativos) em instituições governamentais, controlando numerações, acessos, permissões e possibilitando pesquisas textuais.
 
+---
 
-Benefícios:
-===================================
+## Funcionalidades
 
-1. <strong>Padronização dos formatos</strong> dos documentos, como cabeçalhos, rodapés, posicionamentos de destinatários, assuntos, datas, referências, assinaturas, famílias e tamanhos de fontes;
+1. **Padronização dos formatos** dos documentos (cabeçalhos, rodapés, assinaturas, fontes)
+2. **Controle da numeração** dos documentos produzidos em cada setor
+3. **Acesso remoto** — gerenciamento via internet ou rede interna
+4. **Controle de acesso e de alteração**
+5. **Pesquisa textual** no universo de documentos produzidos
+6. **Workflow** — controle do fluxo de trabalho e tramitações
+7. **Repositório** — armazenamento de anexos por setor
+8. **Auditoria** — log de acessos e ações
+9. **Estatísticas** — relatórios por tipo, setor e período
 
-2. <strong>Controle da numeração</strong> dos documentos produzidos em cada setor;
+---
 
-3. <strong>Maior praticidade</strong>, uma vez que os documentos são armazenados em nuvem e o usuário pode gerenciá-los a partir de qualquer computador conectado à internet ou rede interna;
+## Requisitos (Ambiente Atualizado)
 
-4. <strong>Controle de acesso e de alteração</strong>;
+| Componente | Versão mínima |
+|---|---|
+| Apache | 2.4+ |
+| PHP | 8.1+ |
+| MySQL | 8.0+ (ou MariaDB 10.5+) |
 
-5. <strong>Agilidade na obtenção das informações</strong> através das consultas textuais no universo de documentos produzidos nos setores de um mesmo órgão;
+**Módulos PHP necessários:** `php-mysql`, `php-mbstring`, `php-xml`, `php-gd`, `php-curl`
 
-6. <strong>Facilidade de acompanhamento dos trabalhos</strong> desenvolvidos nos setores, através da visualização dos documentos gerados;
+---
 
-7. <strong>Rapidez na elaboração de um documento</strong>, uma vez que o usuário não se preocupa com as características da forma do tipo de documento, focando sua atenção e criatividade no conteúdo;
+## Instalação
 
-8. <strong>Possibilidade de colaboração</strong> entre os membros de um mesmo setor durante a criação de um documento antes de imprimi-lo;
+### 1. Banco de Dados
 
-9. <strong>Armazenamento seguro</strong>, uma vez que os registros são gravados em nuvem, com rotinas de backup, e não nos computadores dos usuários;
+```sql
+CREATE DATABASE geradoc CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+```
 
-10. <strong>Workflow</strong>, controle do fluxo de trabalho e registro das tramitações dos documentos nos setores da instituição;
+Importe o arquivo SQL:
 
-11. <strong>Repositório</strong>, possibilidade de armazenar os anexos dos documentos de cada setor, evitando a necessidade de impressões desses arquivos.
+```bash
+mysql geradoc < docs/geradoc.sql
+```
 
+**Importante — MySQL 8.x:** Desabilite o `ONLY_FULL_GROUP_BY` para que as estatísticas funcionem corretamente. Adicione ao arquivo `/etc/mysql/mysql.conf.d/mysqld.cnf`:
 
-Licença e suporte:
-===================================
+```ini
+[mysqld]
+sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+```
 
-Este sistema é um software livre baseado em outros softwares livres; você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF); na versão 3 da Licença.
+### 2. Configuração da Aplicação
 
-Este sistema é distribuído na esperança de que possa ser  útil, mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU para maiores detalhes.
+Copie a pasta `geradoc` para o diretório `htdocs` (Apache) ou `/var/www/html/`.
 
-Em caso de dúvidas, erros ou sugestões, por favor, envie e-mail para tarsodecastro@gmail.com
+Edite `application/config/config.php`:
 
+```php
+$config['base_url'] = "http://localhost/geradoc/";
+```
 
-Requisitos:
-===================================
+### 3. Arquivo `application/config/database.php`
 
-1. Apache 2.0.63
-2. PHP 5.3.2
-3. MySQL Server 5.1.44 ou MariaDB 5.5
+Crie o arquivo com o conteúdo abaixo:
 
+```php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-Banco de Dados:
-===================================
+$active_group = 'default';
+$active_record = TRUE;
 
-1. Crie a base de dados <strong>geradoc</strong> e importe o arquivo: <strong>geradoc/docs/geradoc.sql</strong>
-2. Crie um usuário <strong>geradoc</strong> com permissões para <strong>criar e ler</strong> dados no banco criado.
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';       // usuário do banco
+$db['default']['password'] = '';           // senha do banco
+$db['default']['database'] = 'geradoc';
+$db['default']['dbdriver'] = 'mysqli';
+$db['default']['dbprefix'] = '';
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = TRUE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = '';
+$db['default']['char_set'] = 'utf8';
+$db['default']['dbcollat'] = 'utf8_unicode_ci';
+$db['default']['swap_pre'] = '';
+$db['default']['autoinit'] = TRUE;
+$db['default']['stricton'] = FALSE;
+```
 
+### 4. Arquivo `application/config/email.php`
 
-Configuração da aplicação:
-===================================
+```php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-1. Copie a pasta <strong>geradoc</strong> para a pasta <strong>htdocs</strong> do Apache
+$config['protocol']    = 'smtp';
+$config['smtp_host']   = 'smtp.gmail.com';
+$config['smtp_crypto'] = 'tls';
+$config['smtp_port']   = 587;
+$config['starttls']    = TRUE;
+$config['validate']    = TRUE;
+$config['smtp_user']   = '';   // seu e-mail
+$config['smtp_pass']   = '';   // sua senha de app
+$config['mailtype']    = 'html';
+$config['charset']     = 'utf-8';
+$config['wordwrap']    = TRUE;
+$config['newline']     = "\r\n";
+```
 
-2. Altere os dados do seguinte arquivo:
+### 5. Permissões
 
-	a. geradoc/application/config/config.php
-	
-		$config['base_url']	= "http://localhost/geradoc/"; // colocar a url de seu servidor.
+```bash
+chmod -R 775 files/
+chown -R www-data:www-data files/
+```
 
-3. Na pasta <strong>geradoc/application/config/</strong> crie um arquivo com o nome <strong>database.php</strong> com o seguinte conteúdo:
-		
-		<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-		
-		$active_group = 'default';
-		$active_record = TRUE;
+### 6. Apache — mod_rewrite
 
-		$db['default']['hostname'] = 'localhost';
-		$db['default']['username'] = ''; //informe o usuário do banco
-		$db['default']['password'] = ''; //informe a senha do usuário do banco
-		$db['default']['database'] = 'geradoc';
-		$db['default']['dbdriver'] = 'mysqli';
-		$db['default']['dbprefix'] = '';
-		$db['default']['pconnect'] = TRUE;
-		$db['default']['db_debug'] = TRUE;
-		$db['default']['cache_on'] = FALSE;
-		$db['default']['cachedir'] = '';
-		$db['default']['char_set'] = 'utf8';
-		$db['default']['dbcollat'] = 'utf8_unicode_ci';
-		$db['default']['swap_pre'] = '';
-		$db['default']['autoinit'] = TRUE;
-		$db['default']['stricton'] = FALSE;
+```bash
+a2enmod rewrite
+service apache2 restart
+```
 
-4. Ainda na pasta <strong>geradoc/application/config/</strong> crie um arquivo com o nome <strong>email.php</strong> com o seguinte conteúdo:
+---
 
-		<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+## Acesso ao Sistema
 
-		//Para envio de e-mail usando uma conta g-mail com TLS
+URL: `http://localhost/geradoc/`
 
-		$config['protocol']='smtp';
-		$config['smtp_host']='smtp.gmail.com';
-		$config['smtp_crypto'] = 'tls';
-		$config['smtp_port']= 587;
-		$config['starttls'] = TRUE;
-		$config['validate']= TRUE;
-		$config['smtp_user']='';
-		$config['smtp_pass']='';
-		$config['mailtype']='html';
-		$config['charset'] = 'utf-8';
-		$config['wordwrap'] = 'TRUE';
-		$config['newline']="\r\n"; 
-	
-5. Dê permissões de <strong>leitura e escrita</strong> para o servidor web nas pastas abaixo:
+| Campo | Valor |
+|---|---|
+| E-mail | `admin@geradoc.com.br` |
+| Senha | `admin` |
 
-		geradoc/files
+---
 
+## Correções Aplicadas (PHP 8.x)
 
-Acesso ao sistema local:
-===================================
+| Arquivo | Problema | Correção |
+|---|---|---|
+| `system/core/Input.php` | `filter_var()` com `$flag = ''` | Alterado para `$flag = 0` |
+| `system/core/Security.php` | `each()` removida no PHP 8 | Substituída por `foreach(array_keys())` |
+| `system/libraries/Profiler.php` | Sintaxe `->_compile_{$key}` removida | Variável intermediária |
+| `application/libraries/jpgraph/*.php` | `each()` em múltiplos locais | Substituídas por `foreach()` |
 
-Acesse [http://localhost/geradoc](http://localhost/geradoc "http://localhost/geradoc") e informe os dados abaixo:
+---
 
-* E-mail: admin@geradoc.com.br  
-* Senha: admin  
+## Tema Visual
 
+O sistema utiliza o tema **WordPress Admin Off-White**:
+
+- Sidebar escura fixa (`#1d2327`) com menu colapsável
+- Topbar branca com data, countdown de sessão e avatar do usuário
+- Área de conteúdo off-white (`#f0f0f1`)
+- Paleta azul WordPress (`#2271b1`) — sem cores verdes
+- Totalmente responsivo (mobile-friendly)
+
+---
+
+## Licença
+
+Software livre sob a **GNU GPL v3**. Redistribuição e modificação permitidas conforme os termos da licença.
+
+Dúvidas, erros ou sugestões: tarsodecastro@gmail.com
