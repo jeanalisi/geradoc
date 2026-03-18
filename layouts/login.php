@@ -3,11 +3,12 @@
 	$CI->load->library('datas');
 	$today = $CI->datas->getMinDateExtenso(); 	
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="content-language" content="pt-br" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<meta name="author" content="GeraDox">
 	<meta name="reply-to" content="contato.geradox@gmail.com">
@@ -19,26 +20,20 @@
 
 	<title><?php echo $CI->config->item('title');?></title>
 	{TPL_css}
-	<link href="<?php echo base_url();?>bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
-	<link href="<?php echo base_url();?>bootstrap/css/bootstrap-theme.min.css" rel="stylesheet"> 
+	<link href="<?php echo base_url();?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>bootstrap/css/animate.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>bootstrap/css/login_clean.css" rel="stylesheet">
     {TPL_js}
+    <script src="<?php echo base_url();?>js/jquery-1.11.1.min.js"></script>
     <script src="<?php echo base_url();?>bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div id="geral"> 
-		<div id="topo">			
-				<div id="topo_left"></div>				
-				<div id="campo_data"><?php echo $today; ?></div>					
-				<div id="topo_right"></div>	
-		</div>
-		 
-		<div id="conteudo">				 
-			{TPL_content}		 
-		</div>		
-				 
-	  <div id="rodape">
-	  	<?php echo $CI->config->item('rodape_sistema');?>
-	  </div>	 
-	</div>
+	{TPL_content}
+	<footer class="footer">
+	  <div class="container text-center">
+	    <p class="text-muted"><?php echo $CI->config->item('rodape_sistema');?></p>
+	  </div>
+	</footer>
 </body>
 </html>
