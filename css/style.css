@@ -18,10 +18,10 @@
 	/*
 	background-image: url(../images/bg_top_geradox.jpg); 
 	background-repeat:repeat-x;
-	background-color: #4e8079; 
+	background-color: #2271b1; 
 	*/
 	
-	background-color: #4e8079;
+	background-color: #2271b1;
 }
 
 #topo #topo_left{	
@@ -176,8 +176,8 @@
 /*-----Classes CSS------*/
 .titulo1{	
 	font-size:13pt;
-	background-color: #CAE1D7;
-	color:#006400;
+	background-color: #f6f7f7;
+	color:#1d2327;
 	padding: 5px;
 	margin-top: 10px;
 	margin-bottom:10px; 	
@@ -196,7 +196,7 @@
 
 .titulo3{	
 	font-size:15px;
-	color: #006400;
+	color: #1d2327;
 	font-weight:bold;
 	
 }
@@ -424,7 +424,7 @@
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size:16px;
 	font-weight:bold;
-	color: #006400;	
+	color: #1d2327;	
 	background-color:#f7f7f7; 
 	text-align:justify;
 	padding: 5px;

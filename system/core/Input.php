@@ -389,7 +389,7 @@ class CI_Input {
 					break;
 			}
 
-			return (bool) filter_var($ip, FILTER_VALIDATE_IP, $flag);
+			return (bool) filter_var($ip, FILTER_VALIDATE_IP, ($flag === 0 ? [] : ["flags" => $flag]));
 		}
 
 		if ($which !== 'ipv6' && $which !== 'ipv4')

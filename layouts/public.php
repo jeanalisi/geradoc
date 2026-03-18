@@ -80,7 +80,7 @@ $_SESSION['base_url_upload'] = $base_url_upload;
 	        
 	                
 	                <div class="col-md-6 col-lg-6 visible-md visible-lg">
-	                <i id="emblema" class="fa fa-file-text-o fa-4x" style="padding-top: 7px; padding-left: 57px; color: #4e8079;"></i>
+	                <i id="emblema" class="fa fa-file-text-o fa-4x" style="padding-top: 7px; padding-left: 57px; color: #2271b1;"></i>
 	               	 <!-- 
 	                	<img src="<?php echo $CI->config->item('base_url');?>images/bg_logo_left_<?php echo $CI->config->item('orgao');?>.png"> 	
 	               	 -->
