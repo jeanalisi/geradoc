@@ -24,12 +24,10 @@
 */
 
 
-$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
-$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+// URL fixa de produção
+$config['base_url'] = 'https://geradoc.itabaiana.pb.gov.br/';
 
-$config['base_url']	= $root;
-
-$config['orgao'] = 'localhost';
+$config['orgao'] = 'Prefeitura Municipal de Itabaiana - PB';
 
 $config['title']	= "GeraDox";
 
@@ -52,7 +50,7 @@ $config['rodape_documento'] .= 'www.geradox.com.br';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = ''; // URLs limpas via .htaccess (mod_rewrite)
 
 /*
 |--------------------------------------------------------------------------

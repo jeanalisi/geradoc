@@ -1,0 +1,24 @@
+# Arquivos de configuração sensíveis (credenciais)
+application/config/database.php
+application/config/email.php
+
+# Logs e cache
+application/logs/*.log
+application/cache/*
+!application/cache/index.html
+!application/logs/index.html
+
+# Arquivos de upload dos usuários
+files/*
+!files/index.html
+!files/.htaccess
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
